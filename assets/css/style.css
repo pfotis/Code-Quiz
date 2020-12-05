@@ -7,6 +7,33 @@ a {
     color: black;
     
   }
-#time{
+
+h1, h2 {
+    text-align: center;
+}
+
+p {
+    text-align: center;
+    padding: 0 35% 0 35%;
+}
+#time {
     float: right;
 }
+
+ul {
+    list-style-type: none;
+    background-color: white;
+}
+
+li button {
+    margin: 3px 45% 3px 45%;
+    border: none;
+    cursor: pointer;
+    background-color: #2e1a47;
+    color: white;
+    font-size: 1em;
+  }
+  
+  li button:hover {
+    background-color: #9878e2;
+  }
