@@ -6,6 +6,7 @@ var listElement = document.getElementById("list");
 var StartBtn = document.getElementById("startButton");
 
 var min = 75;
+var countQuestion = 0;
 var questions = [
   {
     title: "Commonly used data types DO NOT include:",
@@ -67,11 +68,38 @@ function startQuiz() {
   textElement.innerHTML = "";
   headerElement.innerHTML = "";
   StartBtn.innerHTML = "";
-  printQuestion(0);  
+  printQuestion(countQuestion);  
 }
+
+
 
 StartBtn.addEventListener("click", startQuiz);
 countDown(75);
+console.log(questions.length);
+listElement.addEventListener("click", function(event) {
+  var element = event.target;
+  var result = "";
+  if (element.matches("button") === true) {
+    var index = element.parentElement.getAttribute("data-index");
+    if(questions[countQuestion].choices[index] == questions[countQuestion].answer){
+      result = "Correct";
+      console.log(result);
+    }
+    else{
+      result = "Wrong";
+      console.log(result);
+      
+    }
+    for(var j=0; j<questions[countQuestion].choices.length; j++)
+      listElement.removeChild(list.childNodes[0]);
+    countQuestion++;
+    printQuestion(countQuestion);
+    if((countQuestion+1) == questions.length){
+      console.log("stop");
+
+    }
+  }
+});
 
 
 
