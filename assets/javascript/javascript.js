@@ -5,10 +5,15 @@ var textElement = document.querySelector("#text");
 var listElement = document.getElementById("list");
 var StartBtn = document.getElementById("startButton");
 var resultElemant = document.querySelector("#prevResult");
+var submitElement = document.getElementById("submit");
 
 
 localStorage.secondsLeft= 75;
-var countQuestion = 0;
+localStorage.countQuestion = 0;
+
+var user = [];
+var score = [];
+
 var questions = [
   {
     title: "Commonly used data types DO NOT include:",
@@ -48,7 +53,8 @@ var questions = [
 function countDown() {
   var timerInterval = setInterval(function() {
     timeElement.textContent = "Time : " + localStorage.secondsLeft;
-    localStorage.secondsLeft--;
+    if(localStorage.countQuestion != questions.length)
+      localStorage.secondsLeft--;
   }, 1000);
 }
 
@@ -64,6 +70,12 @@ function printQuestion(count){
     listElement.appendChild(li);
   }
 }
+
+function submitFunction(){
+  
+}
+
+
 function printAnswer(result){
   var printTime = 2;
   var hr = document.createElement("hr");
@@ -84,22 +96,21 @@ function printAnswer(result){
 
 // Start Quiz disappear the the title , text and start button and coming uo the first question
 function startQuiz() {
+  countDown();
   textElement.innerHTML = "";
   headerElement.innerHTML = "";
   StartBtn.innerHTML = "";
-  countDown();
-  printQuestion(countQuestion); 
+  printQuestion(localStorage.countQuestion); 
 }
 
-
-
 StartBtn.addEventListener("click", startQuiz);
+
 listElement.addEventListener("click", function(event) {
   var element = event.target;
   var result = "";
   if (element.matches("button") === true) {
     var index = element.parentElement.getAttribute("data-index");
-    if(questions[countQuestion].choices[index] == questions[countQuestion].answer){
+    if(questions[localStorage.countQuestion].choices[index] == questions[localStorage.countQuestion].answer){
       result = "Correct !";
       console.log(result);
     }
@@ -108,14 +119,35 @@ listElement.addEventListener("click", function(event) {
       localStorage.secondsLeft = localStorage.secondsLeft - 10;
       console.log(result);
     }
-    for(var j=0; j<questions[countQuestion].choices.length; j++)
+    for(var j=0; j<questions[localStorage.countQuestion].choices.length; j++)
       listElement.removeChild(list.childNodes[0]);
-    countQuestion++;
-    if(countQuestion != questions.length){
-      printQuestion(countQuestion);
+      localStorage.countQuestion++;
+    if(localStorage.countQuestion != questions.length){
+      printQuestion( localStorage.countQuestion);
     }
     else{
       questionElement.textContent = "All done !";
+      textElement.innerHTML = "Your final score is : " + localStorage.secondsLeft;
+      var label = document.createElement("label");
+      var input = document.createElement("input");
+      input.type = "text";
+      var button = document.createElement("button");
+      submitElement.textContent = "Enter initials: ";
+      button.innerHTML= "Submit";
+      input.className= "inputClass";
+      var inputElement =document.querySelector(".inputClass");
+      submitElement.appendChild(label);
+      submitElement.appendChild(input);
+      submitElement.appendChild(button);
+      submitElement.addEventListener("click", function(event) {
+        event.preventDefault();
+        //var element = event.target;
+        //user.push(submitElement.input.value);
+        var text = inputElement.value;
+        alert(text);
+        //console.log(localStorage.secondsLeft);
+        score.push(localStorage.secondsLeft);
+      });
     }
   }
 });
