@@ -5,7 +5,7 @@ link of repository :   https://github.com/pfotis/Code-Quiz.git
 link of webpage    :    https://pfotis.github.io/Code-Quiz/
 
 
-In this project there is a Code Quiz the funs for Javascript not only for them. As soon as the user click the button "Start Quiz" hte user will see at the up right of the screen the time 75 sec for all questions. Every wrong answer cost to user 10 seconds from the time. There is possibilty the user will finish the Quiz with negative time .
+In this project there is a Code Quiz the funs for Javascript not only for them. As soon as the user click the button "Start Quiz" hte user will see at the up right of the screen the time 75 sec for all questions. Every wrong answer cost to user 10 seconds from the time. There is possibilty the user will lose if the time goes to zero "Game Over" .
 
 By the end od the Quiz the user has to type the initial , the user will at the Highscores page all the scores . At this page there is a button will clear the history of the all the scores.
 
@@ -34,3 +34,8 @@ By the end od the Quiz the user has to type the initial , the user will at the H
 ### Highscores this is the page all the scores saved .
 
 <img src="./assets/images/readme/highscores.png" alt="highscores">
+
+
+### Game Over if the time up. And after 2 seconds the user will see the main page again.
+
+<img src="./assets/images/readme/gameOver.png" alt="game over">

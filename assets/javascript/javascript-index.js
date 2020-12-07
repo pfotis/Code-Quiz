@@ -93,6 +93,7 @@ function gameOver(){
     questionElement.textContent = "";
     for(var j=0; j<questions[localStorage.countQuestion].choices.length; j++)
       listElement.removeChild(list.childNodes[0]);
+    setTimeout(function(){ window.location.reload();; }, 2000);
 }
 
 // Start Quiz disappear the the title , text and start button and coming uo the first question
