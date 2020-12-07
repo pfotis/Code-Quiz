@@ -5,7 +5,6 @@ body{
 a {
     text-decoration: none;
     color: black;
-    
   }
 
 h1, h2 {
@@ -26,7 +25,7 @@ ul {
 }
 
 li button {
-    margin: 3px 45% 3px 45%;
+    margin: 5px 0 5px 45%;
     border: none;
     cursor: pointer;
     background-color: #2e1a47;
@@ -34,16 +33,31 @@ li button {
     font-size: 1em;
 }
   
-li button:hover, nav li button:hover {
+li button:hover, nav button:hover, form button:hover{
     background-color: #9878e2;
 }
 
-form{
-    text-align: center;
+form {
+    margin-left: 35%;
 }
 
-nav li button {
-    text-align: center;
-    background-color: #2e1a47;
-    color: white;
+#highscoresList {
+    margin-left: 44%;
 }
+
+nav button, form button {
+    text-decoration: none;
+    border: none;
+    background-color: #2e1a47;
+    color: white!important;
+    font-size: 1em;
+}
+
+form button{
+    margin-left: 8px;
+}
+
+#goBack{
+    margin-left: 42%;
+}
+

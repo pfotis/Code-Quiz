@@ -6,7 +6,6 @@ var listElement = document.getElementById("list");
 var StartBtn = document.getElementById("startButton");
 var resultElemant = document.querySelector("#prevResult");
 var submitElement = document.getElementById("submit");
-var highscoresListElement = document.getElementById("highscoresList");
 
 
 localStorage.countQuestion = 0;
@@ -48,6 +47,7 @@ var questions = [
     answer: "console.log"
   }
 ];
+
 // set timer
 function countDown() {
   localStorage.secondsLeft= 75;
@@ -64,7 +64,8 @@ function printQuestion(count){
   for (var j=0; j<questions[count].choices.length; j++){
     var li = document.createElement("li");
     var button = document.createElement("button");
-    button.textContent = questions[count].choices[j];
+    var text = ((j+1)+". " + questions[count].choices[j]);
+    button.textContent =text;
     li.setAttribute("data-index", j);
     li.appendChild(button);
     listElement.appendChild(li);
@@ -75,17 +76,14 @@ function printAnswer(result){
   var printTime = 2;
   var hr = document.createElement("hr");
   var div = document.createElement("div");
-  var timerInterval = setInterval(function() {
-    printTime--;
-    console.log(printTime);
     div.textContent = result;
     resultElemant.appendChild(hr);
     resultElemant.appendChild(div);
-    if(printTime == 0) {
+    var myVar = setInterval(myTimer, 1000);
+    function myTimer() {
       resultElemant.removeChild(list.childNodes[0]);
       resultElemant.removeChild(list.childNodes[0]);
     }
-  }, 1000);
 }
 
 // Start Quiz disappear the the title , text and start button and coming uo the first question
@@ -98,17 +96,17 @@ function startQuiz() {
   printQuestion(localStorage.countQuestion); 
 }
 
+// restore all prev highscores and inital from the local storage
 function open() {
-  
   var storedUser = JSON.parse(localStorage.getItem("user"));
   var storedScore = JSON.parse(localStorage.getItem("score"));
-
   if (storedUser !== null && storedScore !== null) {
     user = storedUser;
     score = storedScore ;
   }
 }
 
+// save the last highscore and the initial
 function save() {
   localStorage.setItem("user", JSON.stringify(user));
   localStorage.setItem("score", JSON.stringify(score));
@@ -124,11 +122,13 @@ listElement.addEventListener("click", function(event) {
     if(questions[localStorage.countQuestion].choices[index] == questions[localStorage.countQuestion].answer){
       result = "Correct !";
       console.log(result);
+     // printAnswer(result);
     }
     else{
       result = "Wrong !";
       localStorage.secondsLeft = localStorage.secondsLeft - 10;
       console.log(result);
+     // printAnswer(result);
     }
     for(var j=0; j<questions[localStorage.countQuestion].choices.length; j++)
       listElement.removeChild(list.childNodes[0]);
@@ -150,14 +150,11 @@ listElement.addEventListener("click", function(event) {
       submitElement.appendChild(button);
       input.setAttribute("class", "inputClass");
       var inputElement =document.querySelector(".inputClass");
-      console.log('input element = ' + inputElement);
       submitElement.addEventListener("click", function(event) {
         var element = event.target;
         if (element.matches("button") === true) {
           var userInput = inputElement.value;
           var scoreInput = localStorage.secondsLeft;
-          console.log(userInput);
-          console.log(scoreInput);
         }
         if(userInput != null){
           user.push(userInput);        
