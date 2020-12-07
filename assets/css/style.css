@@ -34,11 +34,16 @@ li button {
     font-size: 1em;
 }
   
-li button:hover {
+li button:hover, nav li button:hover {
     background-color: #9878e2;
 }
 
-#highscore_button {
-    list-style-type: none;
-    display: inline-block;
+form{
+    text-align: center;
+}
+
+nav li button {
+    text-align: center;
+    background-color: #2e1a47;
+    color: white;
 }

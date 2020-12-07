@@ -6,13 +6,13 @@ var listElement = document.getElementById("list");
 var StartBtn = document.getElementById("startButton");
 var resultElemant = document.querySelector("#prevResult");
 var submitElement = document.getElementById("submit");
+var highscoresListElement = document.getElementById("highscoresList");
 
 
-localStorage.secondsLeft= 75;
 localStorage.countQuestion = 0;
 
-var user = [];
-var score = [];
+var user = new Array;
+var score = new Array;
 
 var questions = [
   {
@@ -48,9 +48,9 @@ var questions = [
     answer: "console.log"
   }
 ];
-
 // set timer
 function countDown() {
+  localStorage.secondsLeft= 75;
   var timerInterval = setInterval(function() {
     timeElement.textContent = "Time : " + localStorage.secondsLeft;
     if(localStorage.countQuestion != questions.length)
@@ -71,11 +71,6 @@ function printQuestion(count){
   }
 }
 
-function submitFunction(){
-  
-}
-
-
 function printAnswer(result){
   var printTime = 2;
   var hr = document.createElement("hr");
@@ -90,17 +85,33 @@ function printAnswer(result){
       resultElemant.removeChild(list.childNodes[0]);
       resultElemant.removeChild(list.childNodes[0]);
     }
-
   }, 1000);
 }
 
 // Start Quiz disappear the the title , text and start button and coming uo the first question
 function startQuiz() {
+  open();
   countDown();
   textElement.innerHTML = "";
   headerElement.innerHTML = "";
   StartBtn.innerHTML = "";
   printQuestion(localStorage.countQuestion); 
+}
+
+function open() {
+  
+  var storedUser = JSON.parse(localStorage.getItem("user"));
+  var storedScore = JSON.parse(localStorage.getItem("score"));
+
+  if (storedUser !== null && storedScore !== null) {
+    user = storedUser;
+    score = storedScore ;
+  }
+}
+
+function save() {
+  localStorage.setItem("user", JSON.stringify(user));
+  localStorage.setItem("score", JSON.stringify(score));
 }
 
 StartBtn.addEventListener("click", startQuiz);
@@ -134,19 +145,26 @@ listElement.addEventListener("click", function(event) {
       var button = document.createElement("button");
       submitElement.textContent = "Enter initials: ";
       button.innerHTML= "Submit";
-      input.className= "inputClass";
-      var inputElement =document.querySelector(".inputClass");
       submitElement.appendChild(label);
       submitElement.appendChild(input);
       submitElement.appendChild(button);
+      input.setAttribute("class", "inputClass");
+      var inputElement =document.querySelector(".inputClass");
+      console.log('input element = ' + inputElement);
       submitElement.addEventListener("click", function(event) {
-        event.preventDefault();
-        //var element = event.target;
-        //user.push(submitElement.input.value);
-        var text = inputElement.value;
-        alert(text);
-        //console.log(localStorage.secondsLeft);
-        score.push(localStorage.secondsLeft);
+        var element = event.target;
+        if (element.matches("button") === true) {
+          var userInput = inputElement.value;
+          var scoreInput = localStorage.secondsLeft;
+          console.log(userInput);
+          console.log(scoreInput);
+        }
+        if(userInput != null){
+          user.push(userInput);        
+          score.push(scoreInput);
+          inputElement.value = "";
+          save();
+        }
       });
     }
   }
