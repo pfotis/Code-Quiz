@@ -39,3 +39,8 @@ By the end od the Quiz the user has to type the initial , the user will at the H
 ### Game Over if the time up. And after 2 seconds the user will see the main page again.
 
 <img src="./assets/images/readme/gameOver.png" alt="game over">
+
+
+At this project there are two HTML file and two javascript file for each HTML. The localstorage from the browser the javascript file they could share the data. 
+
+The css file give style the buttons and the background, nad both HTML files use the same the css file.
