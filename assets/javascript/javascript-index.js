@@ -55,6 +55,8 @@ function countDown() {
     timeElement.textContent = "Time : " + localStorage.secondsLeft;
     if(localStorage.countQuestion != questions.length)
       localStorage.secondsLeft--;
+    if(localStorage.secondsLeft < 0)
+            gameOver();
   }, 1000);
 }
 
@@ -84,6 +86,13 @@ function printAnswer(result){
       resultElemant.removeChild(list.childNodes[0]);
       resultElemant.removeChild(list.childNodes[0]);
     }
+}
+// game over function
+function gameOver(){
+    headerElement.innerHTML = "GAME OVER !";
+    questionElement.textContent = "";
+    for(var j=0; j<questions[localStorage.countQuestion].choices.length; j++)
+      listElement.removeChild(list.childNodes[0]);
 }
 
 // Start Quiz disappear the the title , text and start button and coming uo the first question
