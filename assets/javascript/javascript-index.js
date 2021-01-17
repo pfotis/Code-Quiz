@@ -74,26 +74,13 @@ function printQuestion(count){
   }
 }
 
-function printAnswer(result){
-  var printTime = 2;
-  var hr = document.createElement("hr");
-  var div = document.createElement("div");
-    div.textContent = result;
-    resultElemant.appendChild(hr);
-    resultElemant.appendChild(div);
-    var myVar = setInterval(myTimer, 1000);
-    function myTimer() {
-      resultElemant.removeChild(list.childNodes[0]);
-      resultElemant.removeChild(list.childNodes[0]);
-    }
-}
 // game over function
 function gameOver(){
     headerElement.innerHTML = "GAME OVER !";
     questionElement.textContent = "";
     for(var j=0; j<questions[localStorage.countQuestion].choices.length; j++)
       listElement.removeChild(list.childNodes[0]);
-    setTimeout(function(){ window.location.reload();; }, 2000);
+    setTimeout(finishQuiz(), 2000);
 }
 
 // Start Quiz disappear the the title , text and start button and coming uo the first question
@@ -116,6 +103,40 @@ function open() {
   }
 }
 
+function finishQuiz(){
+  questionElement.textContent = "All done !";
+  textElement.innerHTML = "Your final score is : " + localStorage.secondsLeft;
+  var label = document.createElement("label");
+  var input = document.createElement("input");
+  input.type = "text";
+  var button = document.createElement("button");
+  submitElement.textContent = "Enter initials: ";
+  button.innerHTML= "Submit";
+  submitElement.appendChild(label);
+  submitElement.appendChild(input);
+  submitElement.appendChild(button);
+  input.setAttribute("class", "inputClass");
+  var inputElement =document.querySelector(".inputClass");
+  submitElement.addEventListener("click", function(event) {
+    var element = event.target;
+    if (element.matches("button") === true) {
+      var userInput = inputElement.value;
+      if(localStorage.secondsLeft > -1){
+        var scoreInput = localStorage.secondsLeft;
+      }
+      else{
+        var scoreInput = -1;
+      }
+    }
+    if(userInput != null){
+      user.push(userInput);        
+      score.push(scoreInput);
+      inputElement.value = "";
+      save();
+    }
+  });
+}
+
 // save the last highscore and the initial
 function save() {
   localStorage.setItem("user", JSON.stringify(user));
@@ -131,14 +152,10 @@ listElement.addEventListener("click", function(event) {
     var index = element.parentElement.getAttribute("data-index");
     if(questions[localStorage.countQuestion].choices[index] == questions[localStorage.countQuestion].answer){
       result = "Correct !";
-      console.log(result);
-     // printAnswer(result);
     }
     else{
       result = "Wrong !";
       localStorage.secondsLeft = localStorage.secondsLeft - 10;
-      console.log(result);
-     // printAnswer(result);
     }
     for(var j=0; j<questions[localStorage.countQuestion].choices.length; j++)
       listElement.removeChild(list.childNodes[0]);
@@ -147,32 +164,7 @@ listElement.addEventListener("click", function(event) {
       printQuestion( localStorage.countQuestion);
     }
     else{
-      questionElement.textContent = "All done !";
-      textElement.innerHTML = "Your final score is : " + localStorage.secondsLeft;
-      var label = document.createElement("label");
-      var input = document.createElement("input");
-      input.type = "text";
-      var button = document.createElement("button");
-      submitElement.textContent = "Enter initials: ";
-      button.innerHTML= "Submit";
-      submitElement.appendChild(label);
-      submitElement.appendChild(input);
-      submitElement.appendChild(button);
-      input.setAttribute("class", "inputClass");
-      var inputElement =document.querySelector(".inputClass");
-      submitElement.addEventListener("click", function(event) {
-        var element = event.target;
-        if (element.matches("button") === true) {
-          var userInput = inputElement.value;
-          var scoreInput = localStorage.secondsLeft;
-        }
-        if(userInput != null){
-          user.push(userInput);        
-          score.push(scoreInput);
-          inputElement.value = "";
-          save();
-        }
-      });
+      finishQuiz();
     }
   }
 });
